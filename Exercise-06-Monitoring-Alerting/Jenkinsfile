@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Starting Delivery Monitoring Pipeline'
+            }
+        }
+
+        stage('Check Monitoring Services') {
+            steps {
+                echo 'Checking Prometheus and Grafana containers...'
+                sh '''
+                    if command -v docker >/dev/null 2>&1; then
+                        docker ps
+                    else
+                        echo "Docker CLI is not available on this Jenkins agent."
+                    fi
+                '''
+            }
+        }
+
+        stage('Verify Delivery Metrics') {
+            steps {
+                echo 'Checking delivery metrics endpoint...'
+                sh '''
+                    if command -v curl >/dev/null 2>&1; then
+                        curl -fsS http://host.docker.internal:8000/metrics > /dev/null
+                        echo "Delivery metrics endpoint is responding."
+                    else
+                        echo "curl is not installed; metrics endpoint check skipped."
+                    fi
+                '''
+            }
+        }
+
+        stage('Complete') {
+            steps {
+                echo 'Delivery Monitoring Pipeline completed.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the console output.'
+        }
+    }
+}
