@@ -1,0 +1,41 @@
+EXERCISE 7: INTRODUCTION TO CI AND JENKINS INSTALLATION
+
+1. OBJECTIVE
+To understand Continuous Integration (CI) and install Jenkins
+using Docker.
+
+2. WHAT IS CONTINUOUS INTEGRATION?
+Continuous Integration is a development practice in which
+developers frequently integrate code changes into a shared
+repository. Automated builds and tests help detect errors early.
+
+3. TOOLS REQUIRED
+- Docker Desktop
+- Jenkins
+- Visual Studio Code
+- Web browser
+
+4. JENKINS INSTALLATION
+Jenkins was installed using the official Jenkins LTS Docker image.
+
+Command:
+docker run -d --name jenkins -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+
+Note: An existing Jenkins container was reused for this exercise.
+
+5. VERIFY THE CONTAINER
+Command:
+docker ps
+
+Result:
+The Jenkins container was running successfully.
+
+6. ACCESS JENKINS
+URL: http://localhost:8080/
+
+Result:
+The Jenkins dashboard opened successfully.
+
+7. CONCLUSION
+Jenkins was verified as running inside Docker and was accessible
+through the browser. The existing Jenkins installation was reused.
